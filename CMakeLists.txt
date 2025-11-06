@@ -1000,8 +1000,14 @@ if(IREE_ENABLE_CPUINFO)
   endif()
 endif()
 
-# This defines the iree-flatcc-cli target, so we don't use EXCLUDE_FROM_ALL.
-add_subdirectory(build_tools/third_party/flatcc)
+add_subdirectory(third_party/flatcc)
+# Add flatcc targets to IREE's Runtime export set so they can be installed with IREE.
+# This is needed because IREE internal targets depend on flatcc and must be exportable.
+iree_install_targets(
+  TARGETS flatcc_parsing flatcc_runtime
+  COMPONENT IREEBundledLibraries
+  EXPORT_SET Runtime
+)
 
 if(IREE_ALLOCATOR_SYSTEM STREQUAL "mimalloc")
   set(IREE_ALLOCATOR_MIMALLOC_SRCS "allocator_mimalloc.c")
