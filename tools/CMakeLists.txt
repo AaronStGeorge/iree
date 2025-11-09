@@ -60,7 +60,7 @@ set(IREE_PACKAGE_ROOT_PREFIX "")
 
 # TODO(#6353): Tools has thread dependencies in gtest, benchmark, yaml, etc.
 # This should be split between runtime/compiler with optional threading support.
-if(NOT IREE_ENABLE_THREADING)
+if(NOT IREE_ENABLE_THREADING OR NOT IREE_BUILD_TESTS)
   return()
 endif()
 
