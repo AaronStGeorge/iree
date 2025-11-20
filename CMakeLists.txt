@@ -966,7 +966,7 @@ if(IREE_BUILD_TESTS)
   add_subdirectory(third_party/googletest EXCLUDE_FROM_ALL)
 endif()
 
-if(IREE_ENABLE_THREADING)
+if(IREE_ENABLE_THREADING AND IREE_BUILD_TESTS)
   # Benchmark.
   iree_set_benchmark_cmake_options()
   add_subdirectory(third_party/benchmark EXCLUDE_FROM_ALL)
