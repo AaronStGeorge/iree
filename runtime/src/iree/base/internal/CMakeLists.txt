@@ -15,14 +15,14 @@ iree_cc_library(
     internal
   HDRS
     "atomics.h"
-    "debugging.h"
-    "inline_array.h"
-    "math.h"
-  SRCS
     "atomics_clang.h"
     "atomics_disabled.h"
     "atomics_gcc.h"
     "atomics_msvc.h"
+    "debugging.h"
+    "inline_array.h"
+    "math.h"
+  SRCS
   DEPS
     iree::base::core_headers
   PUBLIC
