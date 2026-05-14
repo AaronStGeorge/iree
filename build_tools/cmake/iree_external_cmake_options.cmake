@@ -11,6 +11,10 @@
 macro(iree_set_benchmark_cmake_options)
   set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
   set(BENCHMARK_ENABLE_INSTALL OFF CACHE BOOL "" FORCE)
+  # google/benchmark turns on -Werror by default for non-Debug builds, which
+  # surfaces -Wmissing-format-attribute warnings on clang/Windows that the
+  # canonical Linux build does not see.
+  set(BENCHMARK_ENABLE_WERROR OFF CACHE BOOL "" FORCE)
 endmacro()
 
 macro(iree_set_cpuinfo_cmake_options)
