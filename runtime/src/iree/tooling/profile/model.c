@@ -508,7 +508,11 @@ static bool iree_profile_model_round_mul_div_u64(uint64_t value,
   if (denominator == 0) return false;
   if (value == 0 || numerator == 0) return true;
 
-#if defined(__SIZEOF_INT128__)
+// Windows: clang defines __SIZEOF_INT128__ but the MSVC-style toolchain does
+// not auto-link compiler-rt builtins (libgcc on Linux provides __udivti3
+// transparently; lld-link on Windows leaves it unresolved). Fall through to
+// the 64-bit overflow-checked path instead.
+#if defined(__SIZEOF_INT128__) && !defined(_WIN32)
   __uint128_t product = (__uint128_t)value * (__uint128_t)numerator;
   product += denominator / 2;
   __uint128_t quotient = product / denominator;
