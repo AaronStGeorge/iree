@@ -408,7 +408,9 @@ endif()
 iree_select_compiler_opts(IREE_DEFAULT_LINKOPTS
   CLANG_OR_GCC
     # Required by all modern software, effectively:
-    "-lm"
+    # -lm is not needed on Windows (math is in the C runtime) and lld-link
+    # rewrites it to m.lib, which does not exist on MSVC toolchains.
+    "$<$<NOT:$<BOOL:${WIN32}>>:-lm>"
     ${_IREE_LOGGING_LINKOPTS}
   MSVC
     "-natvis:${IREE_ROOT_DIR}/runtime/iree.natvis"
